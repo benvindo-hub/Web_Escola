@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão de Estudantes</title>
+<link rel="stylesheet" href="../CSS/Estilo.css">
+<script src="../JAVASCRIPT/logica.js" defer></script>
+</head>
+<body>
+
+<aside>
+    <h2>Académico<span>.</span></h2>
+    <nav>
+        <button class="active" onclick="mostrar('inicio',this)">🏠 Início</button>
+        <button onclick="mostrar('estudantes',this)">🎓 Estudantes</button>
+        <button onclick="mostrar('notas',this)">📝 Notas</button>
+        <button onclick="mostrar('relatorios',this)">📊 Relatórios</button>
+    </nav>
+    <div class="foot">Engenharia Informática<br>3.º ano Ekuikui2<br>Equipa 2</div>
+</aside>
+
+<main>
+    <!-- INÍCIO -->
+    <section id="sec-inicio">
+        <div class="top">
+            <div>
+                <h1>Estatísticas</h1>
+                <p>Visão geral académica em tempo real</p>
+            </div>
+            <button class="btn" onclick="exportarCSV()">⬇ Exportar CSV</button>
+        </div>
+        <div class="cards">
+            <div class="card c1">
+                <b id="totalEst">0</b>
+                <span>Estudantes</span>
+            </div>
+        <div class="card c2">
+            <b id="totalCursos">0</b>
+            <span>Cursos</span>
+        </div>
+        <div class="card c3">
+            <b id="mediaGeral">0.0</b>
+            <span>Média Geral</span>
+        </div>
+        <div class="card c4">
+            <b id="totalAprov">0</b>
+            <span>Aprovados</span>
+        </div>
+        </div>
+        <div class="grid2">
+      <div class="box"><h3>Distribuição por Classificação</h3><canvas id="grafico" width="600" height="180"></canvas>
+        <div class="legend"><span>🟢 Excelente (16-20)</span><span>🔵 Bom (14-15.9)</span><span>🟡 Suficiente (10-13.9)</span><span>🔴 Insuficiente (0-9.9)</span></div>
+      </div>
+      <div class="box"><h3>Últimos Estudantes</h3><div id="ultimos"></div></div>
+    </div>
+  </section>
+
+  <!-- ESTUDANTES -->
+  <section id="sec-estudantes" class="hidden">
+    <div class="top"><div><h1>Gestão de Estudantes</h1><p>Registo, pesquisa e listagem</p></div><button class="btn gray" onclick="limparDados()">Limpar Dados</button></div>
+    <div class="grid2">
+      <div class="box">
+        <h3 id="tituloForm">Registar Estudante</h3>
+        <form id="formEst" onsubmit="guardarEstudante(event)">
+          <label>Nome Completo *</label><input id="nome" placeholder="Ex: Maria dos Santos" required>
+          <div class="error" id="erroNome">Nome deve ter pelo menos 3 letras.</div>
+          <label>Nº de Estudante *</label><input id="matricula" placeholder="Ex: 2024-001" required>
+          <div class="error" id="erroMat">Este estudante já existe.</div>
+          <label>Curso *</label>
+          <select id="curso" required>
+            <option value="">-- Selecionar --</option>
+            <option>Engenharia Informática</option>
+            <option>Economia e Gestão</option>
+            <option>Contabilidade</option>
+            <option>Enfermagem</option>
+            <option>Direito</option>
+            <option>Ciência da Computação</option>
+          </select>
+          <label>Ano</label>
+            <select id="ano">
+            <option>1º Ano</option>
+            <option>2º Ano</option>
+            <option selected>3º Ano</option>
+            <option>4º Ano</option>
+        </select>
+          <label>Email</label><input id="email" type="email" placeholder="nome@email.com">
+          <br><br><button class="btn blue" style="width:100%" type="submit">💾 Guardar Estudante</button>
+          <button type="button" class="btn gray" style="width:100%;margin-top:8px" onclick="cancelarEdicao()">Cancelar Edição</button>
+        </form>
+      </div>
+      <div class="box">
+        <h3>Lista de Estudantes</h3>
+        <div class="toolbar">
+          <input id="pesquisa" placeholder="🔍 Pesquisar por nome, matrícula ou curso..." oninput="render()">
+          <select id="filtroCurso" onchange="render()"><option value="">Todos os cursos</option><option>Informática</option><option>Gestão</option><option>Contabilidade</option><option>Enfermagem</option><option>Direito</option></select>
+          <select id="filtroClass" onchange="render()"><option value="">Todas classificações</option><option>Excelente</option><option>Bom</option><option>Suficiente</option><option>Insuficiente</option></select>
+        </div>
+        <div style="overflow:auto"><table>
+          <thead><tr><th onclick="ordenarPor('nome')">Nome ↕</th><th onclick="ordenarPor('matricula')">Matrícula ↕</th><th>Curso</th><th onclick="ordenarPor('media')">Média ↕</th><th>Classificação</th><th>Ações</th></tr></thead>
+          <tbody id="tabela"></tbody>
+        </table></div>
+        <p id="vazio" style="text-align:center;color:#94a3b8;padding:16px">Nenhum estudante ainda. Regista o primeiro.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTAS -->
+  <section id="sec-notas" class="hidden">
+    <div class="top"><div><h1>Gestão de Notas</h1><p>Cálculo automático de médias</p></div></div>
+    <div class="box">
+      <label>Selecionar Estudante</label><select id="selEstudante"></select>
+      <div class="row3">
+        <div><label>Nota 1 (0-20)</label><input id="n1" type="number" min="0" max="20" step="0.1" value="0" oninput="preverMedia()"></div>
+        <div><label>Nota 2 (0-20)</label><input id="n2" type="number" min="0" max="20" step="0.1" value="0" oninput="preverMedia()"></div>
+        <div><label>Nota 3 (0-20)</label><input id="n3" type="number" min="0" max="20" step="0.1" value="0" oninput="preverMedia()"></div>
+      </div>
+      <div style="margin:14px 0;background:#eff6ff;padding:14px;border-radius:10px;display:flex;justify-content:space-between"><span>Média Prevista: <b id="prevMedia">0.0</b></span><span>Classificação: <b id="prevClass">Sem Notas</b></span></div>
+      <button class="btn green" onclick="guardarNotas()">💾 Guardar Notas</button>
+    </div>
+  </section>
+
+  <!-- RELATÓRIOS -->
+  <section id="sec-relatorios" class="hidden">
+    <div class="top"><div><h1>Relatórios</h1><p>Estatísticas por curso</p></div></div>
+    <div class="box"><div id="relatorio"></div></div>
+  </section>
+</main>
+</body>
+</html>
