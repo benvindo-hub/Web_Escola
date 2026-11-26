@@ -5,10 +5,10 @@ let ordem = {campo:'nome', asc:true};
 
 if(estudantes.length===0){
   estudantes = [
-    {id:1,nome:"Isack Caetano",matricula:"2024-001",curso:"Informática",ano:"3º Ano",email:"ana@email.com",notas:[16,15,17]},
-    {id:2,nome:"Ana Caiombo",matricula:"2024-002",curso:"Informática",ano:"3º Ano",email:"joao@email.com",notas:[12,13,11]},
-    {id:3,nome:"Geraldo Edmundo",matricula:"2024-003",curso:"Gestão",ano:"2º Ano",email:"maria@email.com",notas:[18,19,17]},
-    {id:4,nome:"Benvindo Cahingana",matricula:"2024-004",curso:"Contabilidade",ano:"3º Ano",email:"pedro@email.com",notas:[8,9,7]},
+    {id:1,nome:"Isack Caetano",matricula:"2024-001",curso:"Informática",ano:"3º Ano",email:"isack@email.com",notas:[16,15,17]},
+    {id:2,nome:"Ana Caiombo",matricula:"2024-002",curso:"Informática",ano:"3º Ano",email:"ana@email.com",notas:[12,13,11]},
+    {id:3,nome:"Geraldo Edmundo",matricula:"2024-003",curso:"Gestão",ano:"2º Ano",email:"geraldo@email.com",notas:[18,19,17]},
+    {id:4,nome:"Benvindo Cahingana",matricula:"2024-004",curso:"Contabilidade",ano:"3º Ano",email:"benvindo@email.com",notas:[8,9,7]},
   ];
   
 }
