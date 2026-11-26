@@ -1,33 +1,19 @@
 let estudantes = JSON.parse(localStorage.getItem('estudantes_equipa2') || '[]');
+
 let editId = null;
 let ordem = {campo:'nome', asc:true};
 
 if(estudantes.length===0){
   estudantes = [
-    {id:1,nome:"Ana Paulo",matricula:"2024-001",curso:"Informática",ano:"3º Ano",email:"ana@email.com",notas:[16,15,17]},
-    {id:2,nome:"João Manuel",matricula:"2024-002",curso:"Informática",ano:"3º Ano",email:"joao@email.com",notas:[12,13,11]},
-    {id:3,nome:"Maria dos Santos",matricula:"2024-003",curso:"Gestão",ano:"2º Ano",email:"maria@email.com",notas:[18,19,17]},
-    {id:4,nome:"Pedro Kiala",matricula:"2024-004",curso:"Contabilidade",ano:"3º Ano",email:"pedro@email.com",notas:[8,9,7]},
+    {id:1,nome:"Isack Caetano",matricula:"2024-001",curso:"Informática",ano:"3º Ano",email:"ana@email.com",notas:[16,15,17]},
+    {id:2,nome:"Ana Caiombo",matricula:"2024-002",curso:"Informática",ano:"3º Ano",email:"joao@email.com",notas:[12,13,11]},
+    {id:3,nome:"Geraldo Edmundo",matricula:"2024-003",curso:"Gestão",ano:"2º Ano",email:"maria@email.com",notas:[18,19,17]},
+    {id:4,nome:"Benvindo Cahingana",matricula:"2024-004",curso:"Contabilidade",ano:"3º Ano",email:"pedro@email.com",notas:[8,9,7]},
   ];
-  salvar();
+  
 }
+salvar();
 
-function salvar(){ localStorage.setItem('estudantes_equipa2', JSON.stringify(estudantes)); }
-function media(e){ if(!e.notas||e.notas.length===0) return 0; return e.notas.reduce((a,b)=>a+b,0)/e.notas.length; }
-function classificacao(m){
-  if(m===0) return "Sem Notas";
-  if(m>=16) return "Excelente";
-  if(m>=14) return "Bom";
-  if(m>=10) return "Suficiente";
-  return "Insuficiente";
-}
-function mostrar(id,btn){
-  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
-  document.getElementById('sec-'+id).classList.remove('hidden');
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  render();
-}
 function guardarEstudante(e){
   e.preventDefault();
   let nome=document.getElementById('nome').value.trim();
@@ -53,6 +39,23 @@ function guardarEstudante(e){
   salvar(); e.target.reset(); render();
   alert("Estudante guardado com sucesso!");
 }
+function salvar(){ localStorage.setItem('estudantes_equipa2', JSON.stringify(estudantes)); }
+function media(e){ if(!e.notas||e.notas.length===0) return 0; return e.notas.reduce((a,b)=>a+b,0)/e.notas.length; }
+function classificacao(m){
+  if(m===0) return "Sem Notas";
+  else if(m>=16) return "Excelente";
+  else if(m>=14) return "Bom";
+  else if(m>=10) return "Suficiente";
+  else return "Insuficiente";
+}
+function mostrar(id,btn){
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('sec-'+id).classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  render();
+}
+
 function cancelarEdicao(){ editId=null; document.getElementById('formEst').reset(); document.getElementById('tituloForm').innerText="Registar Estudante"; }
 function editar(id){
   let est=estudantes.find(x=>x.id===id); editId=id;

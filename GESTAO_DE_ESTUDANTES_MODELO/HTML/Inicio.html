@@ -62,10 +62,10 @@
     <div class="grid2">
       <div class="box">
         <h3 id="tituloForm">Registar Estudante</h3>
-        <form id="formEst" onsubmit="guardarEstudante(event)">
-          <label>Nome Completo *</label><input id="nome" placeholder="Ex: Maria dos Santos" required>
+        <form id="formEst" >
+          <label>Nome Completo *</label><input id="nome" placeholder="Insira o seu nome" required>
           <div class="error" id="erroNome">Nome deve ter pelo menos 3 letras.</div>
-          <label>Nº de Estudante *</label><input id="matricula" placeholder="Ex: 2024-001" required>
+          <label>Nº de Estudante *</label><input id="numero" placeholder="Insira o número de estudante" required>
           <div class="error" id="erroMat">Este estudante já existe.</div>
           <label>Curso *</label>
           <select id="curso" required>
@@ -79,9 +79,9 @@
           </select>
           <label>Ano</label>
             <select id="ano">
-            <option>1º Ano</option>
+            <option selected>1º Ano </option>
             <option>2º Ano</option>
-            <option selected>3º Ano</option>
+            <option> 3º Ano</option>
             <option>4º Ano</option>
         </select>
           <label>Email</label><input id="email" type="email" placeholder="nome@email.com">
